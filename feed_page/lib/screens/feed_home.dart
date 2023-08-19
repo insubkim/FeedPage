@@ -21,36 +21,94 @@ class _FeedHomeState extends State<FeedHome> {
       appBar: AppBar(
         backgroundColor: Colors.pink,
       ),
-      body: Row(
-        children: [
-          Expanded(
-            child: RadioListTile(
-              title: const Text(
-                '오름차순',
-                style: TextStyle(fontSize: 15),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20,
+              child: Transform.scale(
+                scale: 0.5,
+                child: Radio(
+                  value: EOrder.ascending,
+                  groupValue: _order,
+                  onChanged: (value) {
+                    setState(() {
+                      _order = EOrder.ascending;
+                    });
+                  },
+                ),
               ),
-              value: EOrder.ascending,
-              groupValue: _order,
-              onChanged: (value) {
-                setState(() {
-                  _order = EOrder.ascending;
-                });
-              },
             ),
-          ),
-          Expanded(
-            child: RadioListTile(
-              title: const Text('내림차순'),
-              value: EOrder.descending,
-              groupValue: _order,
-              onChanged: (value) {
-                setState(() {
-                  _order = EOrder.descending;
-                });
-              },
+            Text(
+              '오름차순',
+              style: TextStyle(
+                  color: _order == EOrder.ascending
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5)),
             ),
-          ),
-        ],
+            SizedBox(
+              width: 20,
+              child: Transform.scale(
+                scale: 0.5,
+                child: Radio(
+                  value: EOrder.descending,
+                  groupValue: _order,
+                  onChanged: (value) {
+                    setState(() {
+                      _order = EOrder.descending;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Text(
+              '내림차순',
+              style: TextStyle(
+                  color: _order == EOrder.descending
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5)),
+            ),
+            const Spacer(),
+            OutlinedButton(
+              child: Text(
+                "필터",
+                style: TextStyle(color: Colors.black.withOpacity(0.5)),
+              ),
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (context) => const AlertDialog(),
+              ),
+            ),
+            // Expanded(
+            //   child: RadioListTile(
+            //     title: const Text(
+            //       '오름차순',
+            //       style: TextStyle(fontSize: 15),
+            //     ),
+            //     value: EOrder.ascending,
+            //     groupValue: _order,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         _order = EOrder.ascending;
+            //       });
+            //     },
+            //   ),
+            // ),
+            // Expanded(
+            //   child: RadioListTile(
+            //     title: const Text('내림차순'),
+            //     value: EOrder.descending,
+            //     groupValue: _order,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         _order = EOrder.descending;
+            //       });
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
