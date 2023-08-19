@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../models/category_model.dart';
-import '../services/api_service.dart';
-
 class FeedHome extends StatefulWidget {
   const FeedHome({super.key});
 
@@ -10,39 +7,50 @@ class FeedHome extends StatefulWidget {
   State<FeedHome> createState() => _FeedHomeState();
 }
 
+enum EOrder { ascending, descending }
+
 class _FeedHomeState extends State<FeedHome> {
   //ascending if order = 0
-  //descending if order = 1
-  int order = 0;
-  Future<List<CategoryModel>> categories = ApiService.getCategories();
+  EOrder _order = EOrder.ascending;
+
+  //Future<List<CategoryModel>> categories = ApiService.getCategories();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.pink,
       ),
-      body: FutureBuilder(
-        future: categories,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                var a = snapshot.data![index];
-                return Text(
-                  a.name,
-                  style: const TextStyle(fontSize: 40),
-                );
-              },
-              itemCount: snapshot.data!.length,
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
+      body: Row(
+        children: [
+          Expanded(
+            child: RadioListTile(
+              title: const Text(
+                '오름차순',
+                style: TextStyle(fontSize: 15),
               ),
-            );
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
+              value: EOrder.ascending,
+              groupValue: _order,
+              onChanged: (value) {
+                setState(() {
+                  _order = EOrder.ascending;
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: RadioListTile(
+              title: const Text('내림차순'),
+              value: EOrder.descending,
+              groupValue: _order,
+              onChanged: (value) {
+                setState(() {
+                  _order = EOrder.descending;
+                });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
