@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class FeedModel {
   final int id;
   final String title;
-  final String content;
+  final String? content;
   final int categoryId;
   final int userId;
   String created;
