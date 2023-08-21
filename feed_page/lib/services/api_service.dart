@@ -4,11 +4,11 @@ import 'package:feed_page/models/category_model.dart';
 
 class ApiService {
   static const String baseUrl = 'https://problem.comento.kr';
-  static const String category_end_point = '/api/category';
+  static const String categoryEndPoint = '/api/category';
   static Future<List<CategoryModel>> getCategories() async {
     List<CategoryModel> categoryInstances = [];
 
-    final url = Uri.parse('$baseUrl$category_end_point');
+    final url = Uri.parse('$baseUrl$categoryEndPoint');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final Map<String, dynamic> js = jsonDecode(response.body);
@@ -17,7 +17,6 @@ class ApiService {
       }
       return categoryInstances;
     }
-    //need catch error
     throw Error();
   }
 }
