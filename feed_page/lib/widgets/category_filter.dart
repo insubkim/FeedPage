@@ -74,6 +74,18 @@ class _CategoryFilterState extends State<CategoryFilter> {
                         ),
                       ],
                     ),
+                  GestureDetector(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(40)),
+                      onPressed: () {},
+                      child: const Text(
+                        "저장하기",
+                        style: TextStyle(
+                            backgroundColor: Colors.blue, color: Colors.white),
+                      ),
+                    ),
+                  )
                 ],
               ),
             );
