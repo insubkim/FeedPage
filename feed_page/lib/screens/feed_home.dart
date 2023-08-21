@@ -1,6 +1,7 @@
 import 'package:feed_page/models/category_model.dart';
 import 'package:feed_page/models/filter_model.dart';
 import 'package:feed_page/services/api_service.dart';
+import 'package:feed_page/widgets/card_list.dart';
 import 'package:feed_page/widgets/feed_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,10 @@ class FeedHome extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Consumer<FilterModel>(
-              builder: (context, value, child) {
-                if (value.getIsNotSet()) {
-                  value.setFilter(snapshot.data!);
-                  value.setIsNotset(false);
+              builder: (context, filter, child) {
+                if (filter.getIsNotSet()) {
+                  filter.setFilter(snapshot.data!);
+                  filter.setIsNotset(false);
                 }
                 return Column(
                   children: [
@@ -51,8 +52,7 @@ class FeedHome extends StatelessWidget {
                         ],
                       ),
                     ),
-                    for (int i = 0; i < value.getCategories().length; i++)
-                      Text(value.getCategories()[i].name)
+                    CardList(filterModel: filter),
                   ],
                 );
               },
