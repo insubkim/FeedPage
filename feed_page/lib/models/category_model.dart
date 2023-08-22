@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 class CategoryModel {
   final int id;
   final String name;
+
   late String created;
   late String updated;
   late DateTime createdTime;
@@ -22,8 +23,4 @@ class CategoryModel {
     updatedTime = DateTime.parse(created);
     updated = DateFormat('yyyy-MM-dd').format(createdTime);
   }
-
-  get getId => id;
-
-  get getName => name;
 }

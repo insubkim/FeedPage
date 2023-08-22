@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class AdPost extends StatelessWidget {
   final CardList widget;
   final AdListModel adListModel;
-  late int index;
+  final int index;
 
-  AdPost(
+  const AdPost(
       {super.key,
       required this.widget,
       required this.adListModel,
@@ -15,9 +15,10 @@ class AdPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (index >= adListModel.getAdList.length) {
-      int tmp = adListModel.getAdList.length;
-      index -= tmp;
+    int adjustedIndex = 0;
+    if (index >= adListModel.adList.length) {
+      int tmp = adListModel.adList.length;
+      adjustedIndex = index - tmp;
     }
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -30,13 +31,13 @@ class AdPost extends StatelessWidget {
             height: 18,
           ),
           SizedBox(
-            child: Image.network(adListModel.adList[index].img),
+            child: Image.network(adListModel.adList[adjustedIndex].img),
           ),
           const SizedBox(
             height: 18,
           ),
           Text(
-            adListModel.adList[index].title,
+            adListModel.adList[adjustedIndex].title,
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -45,7 +46,7 @@ class AdPost extends StatelessWidget {
             height: 18,
           ),
           Text(
-            adListModel.adList[index].contents,
+            adListModel.adList[adjustedIndex].contents,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

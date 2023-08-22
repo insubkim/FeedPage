@@ -6,6 +6,7 @@ class ReplyModel {
   final int id;
   final int userId;
   final int parent;
+
   late String contents;
 
   late String created;

@@ -3,6 +3,7 @@ import 'package:feed_page/models/filter_model.dart';
 import 'package:feed_page/services/api_service.dart';
 import 'package:feed_page/widgets/card_list.dart';
 import 'package:feed_page/widgets/feed_filter.dart';
+import 'package:feed_page/widgets/order_radio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,90 +68,6 @@ class FeedHome extends StatelessWidget {
           }
         },
       ),
-    );
-  }
-}
-
-class OrderRadio extends StatefulWidget {
-  const OrderRadio({super.key});
-
-  @override
-  State<OrderRadio> createState() => _OrderRadioState();
-}
-
-class _OrderRadioState extends State<OrderRadio> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<FilterModel>(
-      builder: (context, filter, child) {
-        EOrder order = filter.getOrder();
-        return Row(
-          children: [
-            SizedBox(
-              width: 20,
-              child: Transform.scale(
-                scale: 0.5,
-                child: Radio(
-                  value: EOrder.ascending,
-                  groupValue: order,
-                  onChanged: (value) {
-                    setState(() {
-                      order = EOrder.ascending;
-                      filter.setOrder(order);
-                    });
-                  },
-                ),
-              ),
-            ),
-            GestureDetector(
-              child: Text(
-                '오름차순',
-                style: TextStyle(
-                    color: order == EOrder.ascending
-                        ? Colors.black
-                        : Colors.black.withOpacity(0.5)),
-              ),
-              onTap: () {
-                setState(() {
-                  order = EOrder.ascending;
-                  filter.setOrder(order);
-                });
-              },
-            ),
-            SizedBox(
-              width: 20,
-              child: Transform.scale(
-                scale: 0.5,
-                child: Radio(
-                  value: EOrder.descending,
-                  groupValue: order,
-                  onChanged: (value) {
-                    setState(() {
-                      order = EOrder.descending;
-                      filter.setOrder(order);
-                    });
-                  },
-                ),
-              ),
-            ),
-            GestureDetector(
-              child: Text(
-                '내림차순',
-                style: TextStyle(
-                    color: order == EOrder.descending
-                        ? Colors.black
-                        : Colors.black.withOpacity(0.5)),
-              ),
-              onTap: () {
-                setState(() {
-                  order = EOrder.descending;
-                  filter.setOrder(order);
-                });
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -6,7 +6,7 @@ enum EOrder { ascending, descending }
 
 class FilterModel extends ChangeNotifier {
   final List<CategoryModel> _categories = [];
-  EOrder _order = EOrder.ascending;
+  EOrder order = EOrder.ascending;
   bool isNotSet = true;
   bool isChanged = false;
 
@@ -28,7 +28,7 @@ class FilterModel extends ChangeNotifier {
   }
 
   void setOrder(EOrder order) {
-    _order = order;
+    this.order = order;
     isChanged = true;
     notifyListeners();
   }
@@ -45,8 +45,6 @@ class FilterModel extends ChangeNotifier {
 
   set setIsChanged(isChanged) => this.isChanged = isChanged;
 
-  get order => _order;
-
   void setFilter(List<CategoryModel> list) {
     for (var x in list) {
       _categories.add(x);
@@ -58,7 +56,7 @@ class FilterModel extends ChangeNotifier {
   }
 
   EOrder getOrder() {
-    return _order;
+    return order;
   }
 
   bool hasID(int id) {

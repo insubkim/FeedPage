@@ -3,13 +3,15 @@ import 'package:intl/intl.dart';
 class AdModel {
   final int id;
   final String title;
-  late String contents;
-  static const imgPath = 'https://cdn.comento.kr/assignment/';
   final String img;
+
+  late String contents;
   late String created;
   late String updated;
   late DateTime createdTime;
   late DateTime updatedTime;
+
+  static const imgPath = 'https://cdn.comento.kr/assignment/';
 
   AdModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],

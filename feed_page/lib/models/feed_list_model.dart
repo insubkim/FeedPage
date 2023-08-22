@@ -6,6 +6,7 @@ class FeedListModel {
   int lastPage = 0;
   int perPage = 10;
   int total = -1;
+
   late FilterModel filterModel;
   final List<FeedModel> feedList = [];
 
@@ -13,7 +14,7 @@ class FeedListModel {
 
   void append(FeedListModel tmp) {
     feedList.clear();
-    for (var x in tmp.getFeedList) {
+    for (var x in tmp.feedList) {
       addFeedModel(x);
     }
     curPage = tmp.curPage;
@@ -25,6 +26,4 @@ class FeedListModel {
   void addFeedModel(FeedModel feedModel) {
     feedList.add(feedModel);
   }
-
-  List<FeedModel> get getFeedList => feedList;
 }

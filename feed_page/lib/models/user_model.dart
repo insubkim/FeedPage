@@ -4,9 +4,11 @@ class UserModel {
   final int id;
   final String name;
   final String email;
+
   late String emailVerifiedAt;
   late String created;
   late String updated;
+
   late DateTime emailVerifiedTime;
   late DateTime createdTime;
   late DateTime updatedTime;

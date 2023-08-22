@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FeedFilter extends StatefulWidget {
-  List<CategoryModel> categories;
-  FeedFilter({super.key, required this.categories});
+  final List<CategoryModel> categories;
+  const FeedFilter({super.key, required this.categories});
 
   @override
   State<FeedFilter> createState() => _FeedFilterState();

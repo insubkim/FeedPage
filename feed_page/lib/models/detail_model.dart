@@ -6,13 +6,16 @@ import 'package:intl/intl.dart';
 class DetailModel {
   final int id;
   final String title;
-  late String contents;
   final int categoryId;
   final int userId;
+
+  late String contents;
+
   late String created;
   late String updated;
   late DateTime createdTime;
   late DateTime updatedTime;
+
   final CategoryModel categoryModel;
   final UserModel user;
 

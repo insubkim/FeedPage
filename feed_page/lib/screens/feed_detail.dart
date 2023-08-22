@@ -3,11 +3,10 @@ import 'package:feed_page/services/api_service.dart';
 import 'package:flutter/material.dart';
 
 class FeedDetail extends StatelessWidget {
-  late Future<DetailModel> detailModel;
+  final Future<DetailModel> detailModel;
   final int id;
-  FeedDetail({super.key, required this.id}) {
-    detailModel = ApiService.getDetailModel(id);
-  }
+  FeedDetail({super.key, required this.id})
+      : detailModel = ApiService.getDetailModel(id);
 
   @override
   Widget build(BuildContext context) {

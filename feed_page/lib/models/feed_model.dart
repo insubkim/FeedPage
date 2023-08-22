@@ -3,9 +3,11 @@ import 'package:intl/intl.dart';
 class FeedModel {
   final int id;
   final String title;
-  late String contents;
   final int categoryId;
   final int userId;
+
+  late String contents;
+
   late String created;
   late String updated;
   late DateTime createdTime;
@@ -28,22 +30,4 @@ class FeedModel {
     updatedTime = DateTime.parse(created);
     updated = DateFormat('yyyy-MM-dd').format(createdTime);
   }
-
-  get getId => id;
-
-  get getTitle => title;
-
-  get getContents => contents;
-
-  get getCategoryId => categoryId;
-
-  get getUserId => userId;
-
-  get getCreated => created;
-
-  get getUpdated => updated;
-
-  get getCreatedTime => createdTime;
-
-  get getUpdatedTime => updatedTime;
 }

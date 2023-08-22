@@ -11,7 +11,7 @@ class AdListModel {
 
   void append(AdListModel tmp) {
     adList.clear();
-    for (var x in tmp.getAdList) {
+    for (var x in tmp.adList) {
       addAdModel(x);
     }
     curPage = tmp.curPage;
@@ -23,6 +23,4 @@ class AdListModel {
   void addAdModel(AdModel adModel) {
     adList.add(adModel);
   }
-
-  get getAdList => adList;
 }
