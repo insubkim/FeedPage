@@ -26,7 +26,6 @@ class FeedHome extends StatelessWidget {
                   filter.setFilter(snapshot.data!);
                   filter.setIsNotset(false);
                 }
-                filter.debug();
                 return Column(
                   children: [
                     Padding(

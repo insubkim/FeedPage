@@ -36,6 +36,7 @@ class ApiService {
       category.add(x.id.toString());
     }
     int page = 1;
+    cardListFeedList.filterModel = filter;
     final url =
         Uri.parse('$baseUrl$feedListEndPoint').replace(queryParameters: {
       'page': page.toString(),

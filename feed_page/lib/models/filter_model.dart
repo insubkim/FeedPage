@@ -11,8 +11,11 @@ class FilterModel extends ChangeNotifier {
 
   bool isNotSet = true;
 
+  bool isChanged = false;
+
   void add(CategoryModel categoryModel) {
     _categories.add(categoryModel);
+    isChanged = true;
     notifyListeners();
   }
 
@@ -23,11 +26,13 @@ class FilterModel extends ChangeNotifier {
         break;
       }
     }
+    isChanged = true;
     notifyListeners();
   }
 
   void setOrder(EOrder order) {
     _order = order;
+    isChanged = true;
     notifyListeners();
   }
 
@@ -39,18 +44,15 @@ class FilterModel extends ChangeNotifier {
     return isNotSet;
   }
 
+  get getIsChanged => isChanged;
+
+  set setIsChanged(isChanged) => this.isChanged = isChanged;
+
+  get order => _order;
+
   void setFilter(List<CategoryModel> list) {
     for (var x in list) {
       _categories.add(x);
-    }
-  }
-
-  void debug() {
-    print('debug');
-    print('isNoSet =$isNotSet');
-    print('_order = $_order');
-    for (int i = 0; i < _categories.length; i++) {
-      print('$i  =  ${_categories[i].name}');
     }
   }
 

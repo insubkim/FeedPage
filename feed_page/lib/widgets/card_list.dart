@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardList extends StatefulWidget {
-  late FilterModel filterModel;
-  CardList({super.key, required this.filterModel});
+  final FilterModel filterModel;
+  const CardList({super.key, required this.filterModel});
 
   @override
   State<CardList> createState() => _CardListState();
@@ -15,7 +15,7 @@ class CardList extends StatefulWidget {
 class _CardListState extends State<CardList> {
   bool isLoading = false;
   late FeedListModel feedListModel = FeedListModel();
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -53,6 +53,16 @@ class _CardListState extends State<CardList> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.filterModel.isChanged) {
+      _scrollController.removeListener(_scrollListener);
+      _scrollController.dispose();
+      feedListModel = FeedListModel();
+      isLoading = false;
+      getFeedData();
+      _scrollController = ScrollController();
+      _scrollController.addListener(_scrollListener);
+      widget.filterModel.isChanged = false;
+    }
     return Consumer<FilterModel>(
       builder: (context, value, child) {
         return Expanded(
@@ -67,9 +77,10 @@ class _CardListState extends State<CardList> {
                 return Column(
                   children: [
                     QuestionPost(
-                        widget: widget,
-                        feedListModel: feedListModel,
-                        index: index),
+                      widget: widget,
+                      feedListModel: feedListModel,
+                      index: index,
+                    ),
                     Divider(
                       color: Colors.black.withOpacity(0.07),
                       thickness: 12,
@@ -138,15 +149,19 @@ class QuestionPost extends StatelessWidget {
             height: 18,
           ),
           Text(
-            feedListModel.feedList[index].title.substring(0, 20),
+            feedListModel.feedList[index].title,
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-          ), //함수 만들어서 문자 자르기.
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           const SizedBox(
             height: 18,
           ),
           Text(
-            feedListModel.feedList[index].contents.substring(0, 20),
+            feedListModel.feedList[index].contents,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
