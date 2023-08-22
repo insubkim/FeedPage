@@ -19,7 +19,11 @@ class QuestionPost extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
-          context, FeedDetail(id: feedListModel.feedList[index].id)),
+          context,
+          MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) =>
+                  FeedDetail(id: feedListModel.feedList[index].id))),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
