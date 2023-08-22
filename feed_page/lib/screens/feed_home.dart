@@ -26,6 +26,7 @@ class FeedHome extends StatelessWidget {
                   filter.setFilter(snapshot.data!);
                   filter.setIsNotset(false);
                 }
+                filter.debug();
                 return Column(
                   children: [
                     Padding(
@@ -51,6 +52,11 @@ class FeedHome extends StatelessWidget {
                           )
                         ],
                       ),
+                    ),
+                    Divider(
+                      color: Colors.grey[350],
+                      thickness: 1,
+                      height: 4,
                     ),
                     CardList(filterModel: filter),
                   ],

@@ -1,26 +1,29 @@
 import 'package:feed_page/models/feed_model.dart';
 
 class FeedListModel {
-  int fromPage = -1;
-  int lastPage = -1;
-  int perPage = -1;
+  int curPage = 0;
+  int lastPage = 0;
+  int perPage = 10;
   int total = -1;
-  int curPage = 1;
 
   final List<FeedModel> feedList = [];
 
   FeedListModel();
 
-  void add(FeedModel feedModel) {
-    feedList.add(feedModel);
-    curPage++;
+  void append(FeedListModel tmp) {
+    feedList.clear();
+    for (var x in tmp.getFeedList) {
+      addFeedModel(x);
+    }
+    curPage = tmp.curPage;
+    lastPage = tmp.lastPage;
+    perPage = tmp.perPage;
+    total = tmp.total;
   }
 
-  get getcurPage => curPage;
-
-  get getTotal => total;
-
-  set setTotal(int total) => this.total = total;
+  void addFeedModel(FeedModel feedModel) {
+    feedList.add(feedModel);
+  }
 
   List<FeedModel> get getFeedList => feedList;
 }

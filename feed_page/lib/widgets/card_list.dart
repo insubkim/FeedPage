@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardList extends StatefulWidget {
-  FilterModel filterModel;
+  late FilterModel filterModel;
   CardList({super.key, required this.filterModel});
 
   @override
@@ -14,7 +14,7 @@ class CardList extends StatefulWidget {
 
 class _CardListState extends State<CardList> {
   bool isLoading = false;
-  late FeedListModel feedList = FeedListModel();
+  late FeedListModel feedListModel = FeedListModel();
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -26,26 +26,20 @@ class _CardListState extends State<CardList> {
 
   Future<void> getFeedData() async {
     if (isLoading) return;
-
     setState(() {
       isLoading = true;
     });
-    print('getFeedData size = ${feedList.getSize}');
     FeedListModel tmp =
-        await ApiService.getFeedList(feedList.getSize + 1, widget.filterModel);
+        await ApiService.getFeedList(feedListModel, widget.filterModel);
     setState(() {
-      feedList.setTotal = tmp.getTotal;
-      for (var x in tmp.getFeedList) {
-        feedList.add(x);
-      }
+      feedListModel.append(tmp);
       isLoading = false;
     });
   }
 
   void _scrollListener() {
-    if (feedList.getSize < feedList.getTotal &&
-        _scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       getFeedData();
     }
   }
@@ -64,25 +58,98 @@ class _CardListState extends State<CardList> {
         return Expanded(
           child: ListView.builder(
             controller: _scrollController,
-            itemCount: feedList.size + 1,
+            itemCount: feedListModel.feedList.isEmpty
+                ? 1
+                : feedListModel.feedList.length,
             itemBuilder: (context, index) {
-              if (index < feedList.size) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(feedList.getFeedList[index].id.toString(),
-                      style: const TextStyle(fontSize: 30)),
+              if (feedListModel.feedList.isNotEmpty &&
+                  index < feedListModel.feedList.length) {
+                return Column(
+                  children: [
+                    QuestionPost(
+                        widget: widget,
+                        feedListModel: feedListModel,
+                        index: index),
+                    Divider(
+                      color: Colors.black.withOpacity(0.07),
+                      thickness: 12,
+                    ),
+                    //광고
+                  ],
                 );
               } else {
                 if (isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
-                  return const Text('done');
+                  return const Text('');
                 }
               }
             },
           ),
         );
       },
+    );
+  }
+}
+
+class QuestionPost extends StatelessWidget {
+  const QuestionPost({
+    super.key,
+    required this.widget,
+    required this.feedListModel,
+    required this.index,
+  });
+
+  final CardList widget;
+  final FeedListModel feedListModel;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.filterModel.getCategoryNameById(
+                    feedListModel.feedList[index].categoryId),
+                style: TextStyle(fontSize: 15, color: Colors.grey[500]),
+              ),
+              Text(
+                '${feedListModel.feedList[index].id}',
+                style: TextStyle(fontSize: 15, color: Colors.grey[400]),
+              ),
+            ],
+          ),
+          Divider(
+            color: Colors.grey[350],
+            height: 20,
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          Text('${feedListModel.feedList[index].userId}'),
+          const SizedBox(
+            height: 18,
+          ),
+          Text(
+            feedListModel.feedList[index].title.substring(0, 20),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+          ), //함수 만들어서 문자 자르기.
+          const SizedBox(
+            height: 18,
+          ),
+          Text(
+            feedListModel.feedList[index].contents.substring(0, 20),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
     );
   }
 }

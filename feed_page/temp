@@ -1,0 +1,97 @@
+
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       home: InfiniteScrollExample(),
+//     );
+//   }
+// }
+
+// class InfiniteScrollExample extends StatefulWidget {
+//   const InfiniteScrollExample({super.key});
+
+//   @override
+//   _InfiniteScrollExampleState createState() => _InfiniteScrollExampleState();
+// }
+
+// class _InfiniteScrollExampleState extends State<InfiniteScrollExample> {
+//   List<String> dataList = [];
+//   int page = 1;
+//   bool isLoading = false;
+//   final ScrollController _scrollController = ScrollController();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchData();
+//     _scrollController.addListener(_scrollListener);
+//   }
+
+//   Future<void> fetchData() async {
+//     if (isLoading) return;
+
+//     setState(() {
+//       isLoading = true;
+//     });
+
+//     // Simulating API call delay
+//     await Future.delayed(const Duration(seconds: 2));
+
+//     List<String> newData =
+//         List.generate(100, (index) => 'Item ${dataList.length + index + 1}');
+//     setState(() {
+//       dataList.addAll(newData);
+//       page++;
+//       isLoading = false;
+//     });
+//   }
+
+//   void _scrollListener() {
+//     if (_scrollController.position.pixels ==
+//         _scrollController.position.maxScrollExtent) {
+//       fetchData();
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     _scrollController.removeListener(_scrollListener);
+//     _scrollController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Infinite Scroll Example'),
+//       ),
+//       body: ListView.builder(
+//         controller: _scrollController,
+//         itemCount: dataList.length + 1,
+//         itemBuilder: (context, index) {
+//           if (index < dataList.length) {
+//             return ListTile(
+//               title: Text(dataList[index]),
+//             );
+//           } else {
+//             if (isLoading) {
+//               return const Center(child: CircularProgressIndicator());
+//             } else {
+//               return const Center(child: Text('No more data'));
+//             }
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }

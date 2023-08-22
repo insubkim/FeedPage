@@ -17,7 +17,12 @@ class FilterModel extends ChangeNotifier {
   }
 
   void remove(CategoryModel categoryModel) {
-    _categories.remove(categoryModel);
+    for (int i = 0; i < _categories.length; i++) {
+      if (categoryModel.id == _categories[i].id) {
+        _categories.removeAt(i);
+        break;
+      }
+    }
     notifyListeners();
   }
 
@@ -40,6 +45,15 @@ class FilterModel extends ChangeNotifier {
     }
   }
 
+  void debug() {
+    print('debug');
+    print('isNoSet =$isNotSet');
+    print('_order = $_order');
+    for (int i = 0; i < _categories.length; i++) {
+      print('$i  =  ${_categories[i].name}');
+    }
+  }
+
   List<CategoryModel> getCategories() {
     return _categories;
   }
@@ -55,5 +69,14 @@ class FilterModel extends ChangeNotifier {
       }
     }
     return false;
+  }
+
+  String getCategoryNameById(int id) {
+    for (var x in _categories) {
+      if (x.id == id) {
+        return x.name;
+      }
+    }
+    return "";
   }
 }

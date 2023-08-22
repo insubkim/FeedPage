@@ -25,7 +25,8 @@ class ApiService {
     throw Error();
   }
 
-  static Future<FeedListModel> getFeedList(int page, FilterModel filter) async {
+  static Future<FeedListModel> getFeedList(
+      FeedListModel cardListFeedList, FilterModel filter) async {
     FeedListModel feedList = FeedListModel();
     List<String> category = [];
     if (filter.getCategories().isEmpty) {
@@ -34,27 +35,29 @@ class ApiService {
     for (var x in filter.getCategories()) {
       category.add(x.id.toString());
     }
+    int page = 1;
     final url =
         Uri.parse('$baseUrl$feedListEndPoint').replace(queryParameters: {
       'page': page.toString(),
       'ord': filter.getOrder() == EOrder.ascending ? 'asc' : 'desc',
-      'category[]': category
-      'limit': (page + 10).toString(),
+      'category[]': category,
+      'limit':
+          (cardListFeedList.lastPage + cardListFeedList.perPage).toString(),
     });
-    print('api page = $page');
-    print('api limit = ${page + 10}');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      print('api');
       final Map<String, dynamic> js = jsonDecode(response.body);
       for (var data in js['data']) {
-        feedList.add(FeedModel.fromJson(data));
+        feedList.addFeedModel(FeedModel.fromJson(data));
       }
-      for (var x in feedList.getFeedList) {
-        print(x.id.toString());
+      feedList.curPage = cardListFeedList.lastPage + 1;
+      feedList.lastPage = js['last_page'];
+      feedList.perPage = js['per_page'];
+      feedList.total = js['total'];
+      if (feedList.curPage > feedList.total) {
+        feedList.curPage = feedList.total;
       }
-      feedList.setTotal = js['total'];
       return feedList;
     }
     throw Error();
