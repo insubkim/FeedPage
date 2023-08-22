@@ -1,21 +1,23 @@
+import 'package:feed_page/models/user_model.dart';
 import 'package:intl/intl.dart';
 
-class FeedModel {
+class ReplyModel {
+  final UserModel user;
   final int id;
-  final String title;
-  late String contents;
-  final int categoryId;
   final int userId;
+  final int parent;
+  late String contents;
+
   late String created;
   late String updated;
   late DateTime createdTime;
   late DateTime updatedTime;
 
-  FeedModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        categoryId = json['category_id'],
+  ReplyModel.fromJson(Map<String, dynamic> json, Map<String, dynamic> idJson)
+      : user = UserModel.fromJson(idJson),
+        id = json['id'],
         userId = json['user_id'],
+        parent = json['parent'],
         created = json['created_at'],
         updated = json['updated_at'] {
     if (json['contents'] == Null) {
@@ -28,22 +30,4 @@ class FeedModel {
     updatedTime = DateTime.parse(created);
     updated = DateFormat('yyyy-MM-dd').format(createdTime);
   }
-
-  get getId => id;
-
-  get getTitle => title;
-
-  get getContents => contents;
-
-  get getCategoryId => categoryId;
-
-  get getUserId => userId;
-
-  get getCreated => created;
-
-  get getUpdated => updated;
-
-  get getCreatedTime => createdTime;
-
-  get getUpdatedTime => updatedTime;
 }

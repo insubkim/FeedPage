@@ -27,21 +27,4 @@ class FeedListModel {
   }
 
   List<FeedModel> get getFeedList => feedList;
-
-//   bool checkFilterChange(FilterModel otherFilterModel) {
-//     if (filterModel.getOrder() != otherFilterModel.getOrder()) {
-//       return true;
-//     }
-//     for (int i = 0; i < filterModel.getCategories().length; i++) {
-//       for (int j = 0; j < otherFilterModel.getCategories().length; j++) {
-//         if (filterModel.getCategories()[i].getId ==
-//             otherFilterModel.getCategories()[i].getId) {
-//           break;
-//         } else if (j == otherFilterModel.getCategories().length - 1) {
-//           return true;
-//         }
-//       }
-//     }
-//     return false;
-//   }
 }

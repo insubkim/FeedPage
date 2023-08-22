@@ -6,11 +6,8 @@ enum EOrder { ascending, descending }
 
 class FilterModel extends ChangeNotifier {
   final List<CategoryModel> _categories = [];
-
   EOrder _order = EOrder.ascending;
-
   bool isNotSet = true;
-
   bool isChanged = false;
 
   void add(CategoryModel categoryModel) {
