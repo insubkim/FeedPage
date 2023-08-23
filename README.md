@@ -5,13 +5,10 @@
 ## 1.프로젝트 구조와 설계 의도
 ![프로그램구조](./Flowchart.png)
 
-<<<<<<< HEAD
-### 
-=======
 최대한 provider를 이용해서 상태 관리를 하였습니다. 
 FeedFilter 클래스에서는 checkbox 상태가 해당 위젯에서 고유하기에 stateful 위젯으로 구현했습니다.
 CardList 클래스는 스크롤 컨트롤 상태가 해당 위젯에서만 사용해서 stateful 위젯으로 구현했습니다.
->>>>>>> 79fc34d8fe76ee4b534eaca7fb890dc2cac93693
+
 
 ## 2.리뷰어에게 강조하고 싶은 부분 또는 기타 내용
 데이터를 받아올떄, circular indicator 를 사용해서 사용자에게 로딩중임을 표시했습니다.
