@@ -19,6 +19,8 @@ class AdPost extends StatelessWidget {
     if (index >= adListModel.adList.length) {
       int tmp = adListModel.adList.length;
       adjustedIndex = index - tmp;
+    } else {
+      adjustedIndex = index;
     }
     return Padding(
       padding: const EdgeInsets.all(20),
